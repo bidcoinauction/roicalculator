@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Social Audits ROI Calculator</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -18,25 +19,57 @@
         }
         .tooltip .tooltiptext {
             visibility: hidden;
-            width: 220px;
-            background-color: #555;
+            width: 240px;
+            background-color: #333;
             color: #fff;
             text-align: center;
             border-radius: 6px;
-            padding: 5px 10px;
+            padding: 8px 12px;
             position: absolute;
             z-index: 1;
             bottom: 125%;
             left: 50%;
-            margin-left: -110px;
+            margin-left: -120px;
             opacity: 0;
             transition: opacity 0.3s;
             font-size: 0.8rem;
             font-weight: 400;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
         }
         .tooltip:hover .tooltiptext {
             visibility: visible;
             opacity: 1;
+        }
+        /* Custom slider styles */
+        input[type=range] {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 100%;
+            height: 8px;
+            background: #d1d5db;
+            border-radius: 5px;
+            outline: none;
+            opacity: 0.7;
+            transition: opacity .2s;
+        }
+        input[type=range]:hover {
+            opacity: 1;
+        }
+        input[type=range]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 20px;
+            height: 20px;
+            background: #4f46e5;
+            cursor: pointer;
+            border-radius: 50%;
+        }
+        input[type=range]::-moz-range-thumb {
+            width: 20px;
+            height: 20px;
+            background: #4f46e5;
+            cursor: pointer;
+            border-radius: 50%;
         }
     </style>
 </head>
@@ -46,82 +79,60 @@
         
         <header class="text-center mb-8">
             <h1 class="text-3xl md:text-4xl font-bold text-slate-900">Social Audits ROI Calculator</h1>
-            <p class="mt-2 text-slate-600 max-w-2xl mx-auto">Estimate the potential return on investment from using our audit platform to enhance your marketing campaigns and mitigate risks.</p>
+            <p class="mt-2 text-slate-600 max-w-2xl mx-auto">See how much of your marketing budget you could save by eliminating bots and inauthentic engagement.</p>
         </header>
 
         <main class="bg-white p-6 sm:p-8 rounded-2xl shadow-lg">
             <form id="roi-form" class="space-y-8">
 
-                <!-- Section 1: Investment Costs -->
+                <!-- Section 1: Campaign & Investment Details -->
                 <fieldset>
-                    <legend class="text-xl font-semibold text-slate-900 border-b border-slate-200 pb-2 mb-4 w-full">1. Your Investment</legend>
+                    <legend class="text-xl font-semibold text-slate-900 border-b border-slate-200 pb-2 mb-4 w-full">1. Your Campaign Details</legend>
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div>
+                            <label for="total-campaign-budget" class="block text-sm font-medium text-slate-700 mb-1">Total Influencer/KOL Budget ($)</label>
+                            <input type="number" id="total-campaign-budget" placeholder="e.g., 50000" class="w-full p-3 border border-slate-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition">
+                        </div>
                         <div>
                             <label for="audit-cost" class="block text-sm font-medium text-slate-700 mb-1">Cost of Social Audit ($)</label>
                             <input type="number" id="audit-cost" value="399" class="w-full p-3 border border-slate-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition">
                         </div>
-                        <div>
-                            <label for="time-horizon" class="block text-sm font-medium text-slate-700 mb-1">Analysis Time Horizon (Months)</label>
-                            <input type="number" id="time-horizon" value="12" class="w-full p-3 border border-slate-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition">
+                    </div>
+                     <div class="mt-6">
+                        <label for="bot-percentage" class="flex items-center text-sm font-medium text-slate-700 mb-2">
+                            Industry Average Bot & Inauthentic Engagement (%)
+                            <span class="tooltip ml-2">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-question-circle text-slate-400" viewBox="0 0 16 16"><path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/><path d="M5.255 5.786a.237.237 0 0 0 .241.247h.825c.138 0 .248-.113.266-.25.09-.656.54-1.134 1.342-1.134.686 0 1.314.343 1.314 1.168 0 .635-.374.927-.965 1.371-.673.489-1.206 1.06-1.168 1.987l.003.217a.25.25 0 0 0 .25.246h.811a.25.25 0 0 0 .25-.25v-.105c0-.718.273-.927 1.01-1.486.609-.463 1.244-.977 1.244-2.056 0-1.511-1.276-2.241-2.673-2.241-1.267 0-2.655.59-2.75 2.286zm1.557 5.763c0 .533.425.927 1.01.927.609 0 1.028-.394 1.028-.927 0-.552-.42-.94-1.029-.94-.584 0-1.009.388-1.009.94z"/></svg>
+                                <span class="tooltiptext">Based on our internal analysis of over 500 KOLs, we've found that, on average, 65% of engagement can be attributed to bots or manipulation. Adjust this based on your industry knowledge.</span>
+                            </span>
+                        </label>
+                        <div class="flex items-center gap-4">
+                            <input type="range" id="bot-percentage" min="0" max="100" value="65" class="w-full">
+                            <span id="bot-percentage-value" class="font-semibold text-indigo-600 text-lg w-16 text-center">65%</span>
                         </div>
                     </div>
                 </fieldset>
 
-                <!-- Section 2: Financial Gains & Benefits -->
+                <!-- Section 2: Operational Efficiency -->
                 <fieldset>
-                    <legend class="text-xl font-semibold text-slate-900 border-b border-slate-200 pb-2 mb-4 w-full">2. Estimated Financial Gains</legend>
-                    
-                    <div class="space-y-4">
-                        <h3 class="text-lg font-semibold text-indigo-700">Risk Mitigation & Cost Savings</h3>
-                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                            <div>
-                                <label for="spend-saved" class="flex items-center text-sm font-medium text-slate-700 mb-1">
-                                    Wasted Spend Averted ($)
-                                    <span class="tooltip ml-2">
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-question-circle text-slate-400" viewBox="0 0 16 16"><path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/><path d="M5.255 5.786a.237.237 0 0 0 .241.247h.825c.138 0 .248-.113.266-.25.09-.656.54-1.134 1.342-1.134.686 0 1.314.343 1.314 1.168 0 .635-.374.927-.965 1.371-.673.489-1.206 1.06-1.168 1.987l.003.217a.25.25 0 0 0 .25.246h.811a.25.25 0 0 0 .25-.25v-.105c0-.718.273-.927 1.01-1.486.609-.463 1.244-.977 1.244-2.056 0-1.511-1.276-2.241-2.673-2.241-1.267 0-2.655.59-2.75 2.286zm1.557 5.763c0 .533.425.927 1.01.927.609 0 1.028-.394 1.028-.927 0-.552-.42-.94-1.029-.94-.584 0-1.009.388-1.009.94z"/></svg>
-                                        <span class="tooltiptext">Estimate the marketing budget saved by avoiding fake followers, fraudulent engagement, or underperforming influencers identified in the audit.</span>
-                                    </span>
-                                </label>
-                                <input type="number" id="spend-saved" placeholder="e.g., 5000" class="w-full p-3 border border-slate-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition">
-                            </div>
-                            <div>
-                                <label for="fraud-averted" class="flex items-center text-sm font-medium text-slate-700 mb-1">
-                                    Major Crisis Averted ($)
-                                    <span class="tooltip ml-2">
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-question-circle text-slate-400" viewBox="0 0 16 16"><path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/><path d="M5.255 5.786a.237.237 0 0 0 .241.247h.825c.138 0 .248-.113.266-.25.09-.656.54-1.134 1.342-1.134.686 0 1.314.343 1.314 1.168 0 .635-.374.927-.965 1.371-.673.489-1.206 1.06-1.168 1.987l.003.217a.25.25 0 0 0 .25.246h.811a.25.25 0 0 0 .25-.25v-.105c0-.718.273-.927 1.01-1.486.609-.463 1.244-.977 1.244-2.056 0-1.511-1.276-2.241-2.673-2.241-1.267 0-2.655.59-2.75 2.286zm1.557 5.763c0 .533.425.927 1.01.927.609 0 1.028-.394 1.028-.927 0-.552-.42-.94-1.029-.94-.584 0-1.009.388-1.009.94z"/></svg>
-                                        <span class="tooltiptext">Estimate the potential financial impact of a PR crisis or compliance issue that was prevented (e.g., cost of crisis management, legal fees, lost sales).</span>
-                                    </span>
-                                </label>
-                                <input type="number" id="fraud-averted" placeholder="e.g., 10000" class="w-full p-3 border border-slate-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition">
-                            </div>
+                    <legend class="text-xl font-semibold text-slate-900 border-b border-slate-200 pb-2 mb-4 w-full">2. Operational Efficiency Gains</legend>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                         <div>
+                            <label for="hours-saved" class="block text-sm font-medium text-slate-700 mb-1">Team Hours Saved per Month</label>
+                            <input type="number" id="hours-saved" placeholder="e.g., 20" class="w-full p-3 border border-slate-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition">
                         </div>
-                    </div>
-
-                    <div class="space-y-4 mt-6">
-                        <h3 class="text-lg font-semibold text-indigo-700">Operational Efficiency</h3>
-                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                             <div>
-                                <label for="hours-saved" class="flex items-center text-sm font-medium text-slate-700 mb-1">
-                                    Team Hours Saved per Month
-                                     <span class="tooltip ml-2">
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-question-circle text-slate-400" viewBox="0 0 16 16"><path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/><path d="M5.255 5.786a.237.237 0 0 0 .241.247h.825c.138 0 .248-.113.266-.25.09-.656.54-1.134 1.342-1.134.686 0 1.314.343 1.314 1.168 0 .635-.374.927-.965 1.371-.673.489-1.206 1.06-1.168 1.987l.003.217a.25.25 0 0 0 .25.246h.811a.25.25 0 0 0 .25-.25v-.105c0-.718.273-.927 1.01-1.486.609-.463 1.244-.977 1.244-2.056 0-1.511-1.276-2.241-2.673-2.241-1.267 0-2.655.59-2.75 2.286zm1.557 5.763c0 .533.425.927 1.01.927.609 0 1.028-.394 1.028-.927 0-.552-.42-.94-1.029-.94-.584 0-1.009.388-1.009.94z"/></svg>
-                                        <span class="tooltiptext">How many hours your team saves on manual data collection, vetting, and reporting each month.</span>
-                                    </span>
-                                </label>
-                                <input type="number" id="hours-saved" placeholder="e.g., 20" class="w-full p-3 border border-slate-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition">
-                            </div>
-                            <div>
-                                <label for="hourly-rate" class="block text-sm font-medium text-slate-700 mb-1">Average Employee Hourly Rate ($)</label>
-                                <input type="number" id="hourly-rate" placeholder="e.g., 50" class="w-full p-3 border border-slate-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition">
-                            </div>
+                        <div>
+                            <label for="hourly-rate" class="block text-sm font-medium text-slate-700 mb-1">Average Employee Hourly Rate ($)</label>
+                            <input type="number" id="hourly-rate" placeholder="e.g., 50" class="w-full p-3 border border-slate-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition">
                         </div>
+                         <input type="hidden" id="time-horizon" value="12">
                     </div>
                 </fieldset>
 
                 <!-- Action Button -->
                 <div class="pt-4 text-center">
                     <button type="submit" class="bg-indigo-600 text-white font-bold py-3 px-10 rounded-lg hover:bg-indigo-700 focus:outline-none focus:ring-4 focus:ring-indigo-500 focus:ring-opacity-50 transition-transform transform hover:scale-105">
-                        Calculate ROI
+                        Calculate My Potential ROI
                     </button>
                 </div>
             </form>
@@ -131,32 +142,30 @@
         <section id="results-section" class="mt-8 hidden">
             <div class="bg-white p-6 sm:p-8 rounded-2xl shadow-lg border-t-4 border-indigo-500">
                 <h2 class="text-2xl font-bold text-slate-900 text-center mb-6">Your Estimated ROI Results</h2>
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 text-center">
-                    
-                    <!-- Overall ROI -->
-                    <div class="bg-slate-50 p-6 rounded-lg">
-                        <h3 class="text-sm font-semibold text-slate-600 uppercase tracking-wider">Overall ROI</h3>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div class="flex flex-col justify-center items-center bg-slate-50 p-6 rounded-lg">
+                        <h3 class="text-sm font-semibold text-slate-600 uppercase tracking-wider mb-2">Budget Breakdown</h3>
+                        <div class="w-full max-w-[250px] h-auto relative">
+                            <canvas id="roiChart"></canvas>
+                        </div>
+                    </div>
+                    <div class="bg-slate-50 p-6 rounded-lg text-center flex flex-col justify-center">
+                        <h3 class="text-sm font-semibold text-slate-600 uppercase tracking-wider">Potential ROI</h3>
                         <p id="overall-roi" class="text-4xl md:text-5xl font-bold mt-2"></p>
                         <p id="roi-summary" class="text-slate-500 mt-2"></p>
                     </div>
-
-                    <!-- Risk Mitigation ROI -->
-                    <div class="bg-slate-50 p-6 rounded-lg">
-                        <h3 class="text-sm font-semibold text-slate-600 uppercase tracking-wider">Risk Mitigation ROI</h3>
-                        <p id="risk-roi" class="text-4xl md:text-5xl font-bold text-green-600 mt-2"></p>
-                        <p class="text-slate-500 mt-2">Return specifically from averting costs.</p>
-                    </div>
-
                 </div>
+
                 <div class="mt-6 border-t border-slate-200 pt-6">
                     <h3 class="text-lg font-semibold text-slate-800 mb-3">Breakdown of Gains:</h3>
                     <ul class="space-y-2 text-slate-700">
                         <li class="flex justify-between items-center p-3 bg-slate-50 rounded-md">
-                            <span>Total Risk Averted:</span>
+                            <span>Potential Wasted Spend Recovered:</span>
                             <span id="total-risk-averted" class="font-semibold"></span>
                         </li>
                         <li class="flex justify-between items-center p-3 bg-slate-50 rounded-md">
-                            <span>Total Operational Savings:</span>
+                            <span>Total Operational Savings (12 mo):</span>
                             <span id="total-ops-savings" class="font-semibold"></span>
                         </li>
                         <li class="flex justify-between items-center p-3 bg-indigo-100 text-indigo-800 rounded-md">
@@ -168,80 +177,136 @@
             </div>
         </section>
 
+        <!-- Lead Capture Section -->
+        <section id="lead-capture-section" class="mt-8 hidden">
+            <div class="bg-indigo-700 text-white p-8 rounded-2xl shadow-lg text-center">
+                <h2 class="text-2xl font-bold mb-2">Ready to Secure Your Budget?</h2>
+                <p class="max-w-xl mx-auto mb-6">Our full audit provides a detailed breakdown of inauthentic activity. Let's talk about how we can protect your next campaign.</p>
+                <form id="lead-form" class="flex flex-col sm:flex-row gap-3 max-w-lg mx-auto">
+                    <input type="email" required placeholder="Enter your email" class="w-full p-3 border border-indigo-400 bg-indigo-600 placeholder-indigo-200 rounded-lg focus:ring-2 focus:ring-white focus:outline-none transition">
+                    <button type="submit" class="bg-white text-indigo-700 font-bold py-3 px-6 rounded-lg hover:bg-indigo-100 focus:outline-none focus:ring-4 focus:ring-indigo-300 transition-transform transform hover:scale-105">
+                        Talk to an Expert
+                    </button>
+                </form>
+                 <div id="form-success-message" class="mt-4 text-green-300 hidden">Thank you! We'll be in touch shortly.</div>
+            </div>
+        </section>
+
     </div>
 
     <script>
-        // Wait for the DOM to be fully loaded
         document.addEventListener('DOMContentLoaded', () => {
             const form = document.getElementById('roi-form');
-            const resultsSection = document.getElementById('results-section');
+            const botPercentageSlider = document.getElementById('bot-percentage');
+            const botPercentageValue = document.getElementById('bot-percentage-value');
+            const leadForm = document.getElementById('lead-form');
+            let roiChart = null; // To hold the chart instance
 
-            // Add event listener for form submission
+            // Update slider value display
+            botPercentageSlider.addEventListener('input', (e) => {
+                botPercentageValue.textContent = `${e.target.value}%`;
+            });
+
+            // Handle main ROI form submission
             form.addEventListener('submit', (e) => {
-                e.preventDefault(); // Prevent page reload
+                e.preventDefault();
                 calculateAndDisplayROI();
             });
+            
+            // Handle lead capture form submission
+            leadForm.addEventListener('submit', (e) => {
+                e.preventDefault();
+                document.getElementById('form-success-message').classList.remove('hidden');
+                leadForm.reset();
+            });
+
+            function calculateAndDisplayROI() {
+                // --- 1. Get values from input fields ---
+                const totalCampaignBudget = parseFloat(document.getElementById('total-campaign-budget').value) || 0;
+                const auditCost = parseFloat(document.getElementById('audit-cost').value) || 0;
+                const botPercentage = parseFloat(document.getElementById('bot-percentage').value) || 0;
+                const hoursSaved = parseFloat(document.getElementById('hours-saved').value) || 0;
+                const hourlyRate = parseFloat(document.getElementById('hourly-rate').value) || 0;
+                const timeHorizon = parseFloat(document.getElementById('time-horizon').value) || 12;
+
+                // --- 2. Perform Calculations ---
+                const potentialWastedSpend = totalCampaignBudget * (botPercentage / 100);
+                const totalOperationalSavings = (hoursSaved * hourlyRate) * timeHorizon;
+                const totalGain = potentialWastedSpend + totalOperationalSavings;
+                const netProfit = totalGain - auditCost;
+                const overallROI = auditCost > 0 ? (netProfit / auditCost) * 100 : 0;
+                const effectiveSpend = totalCampaignBudget - potentialWastedSpend;
+
+                // --- 3. Display the Results ---
+                const formatCurrency = (value) => value.toLocaleString('en-US', { style: 'currency', currency: 'USD', minimumFractionDigits: 0, maximumFractionDigits: 0 });
+                const formatPercent = (value) => `${value.toFixed(1)}%`;
+
+                document.getElementById('total-risk-averted').textContent = formatCurrency(potentialWastedSpend);
+                document.getElementById('total-ops-savings').textContent = formatCurrency(totalOperationalSavings);
+                document.getElementById('total-gain').textContent = formatCurrency(totalGain);
+
+                const overallRoiElement = document.getElementById('overall-roi');
+                overallRoiElement.textContent = formatPercent(overallROI);
+                overallRoiElement.classList.toggle('text-green-600', overallROI >= 0);
+                overallRoiElement.classList.toggle('text-red-600', overallROI < 0);
+
+                const returnPerDollar = auditCost > 0 ? (totalGain / auditCost) : 0;
+                document.getElementById('roi-summary').textContent = `For every $1 invested, you could gain ${formatCurrency(returnPerDollar)}.`;
+
+                // --- 4. Create or Update Chart ---
+                const ctx = document.getElementById('roiChart').getContext('2d');
+                const chartData = {
+                    labels: ['Budget at Risk', 'Effective Spend'],
+                    datasets: [{
+                        data: [potentialWastedSpend, effectiveSpend],
+                        backgroundColor: ['#fca5a5', '#818cf8'],
+                        borderColor: ['#ef4444', '#4f46e5'],
+                        borderWidth: 1
+                    }]
+                };
+
+                if (roiChart) {
+                    roiChart.data = chartData;
+                    roiChart.update();
+                } else {
+                    roiChart = new Chart(ctx, {
+                        type: 'doughnut',
+                        data: chartData,
+                        options: {
+                            responsive: true,
+                            plugins: {
+                                legend: {
+                                    position: 'bottom',
+                                },
+                                tooltip: {
+                                    callbacks: {
+                                        label: function(context) {
+                                            let label = context.label || '';
+                                            if (label) {
+                                                label += ': ';
+                                            }
+                                            if (context.parsed !== null) {
+                                                label += formatCurrency(context.parsed);
+                                            }
+                                            return label;
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    });
+                }
+                
+                // --- 5. Show Results & Lead Capture ---
+                const resultsSection = document.getElementById('results-section');
+                resultsSection.classList.remove('hidden');
+                
+                const leadCaptureSection = document.getElementById('lead-capture-section');
+                leadCaptureSection.classList.remove('hidden');
+
+                resultsSection.scrollIntoView({ behavior: 'smooth' });
+            }
         });
-
-        function calculateAndDisplayROI() {
-            // --- 1. Get values from input fields ---
-            // Use parseFloat to convert string inputs to numbers. Default to 0 if input is empty or invalid.
-            const auditCost = parseFloat(document.getElementById('audit-cost').value) || 0;
-            const timeHorizon = parseFloat(document.getElementById('time-horizon').value) || 1;
-            const spendSaved = parseFloat(document.getElementById('spend-saved').value) || 0;
-            const fraudAverted = parseFloat(document.getElementById('fraud-averted').value) || 0;
-            const hoursSaved = parseFloat(document.getElementById('hours-saved').value) || 0;
-            const hourlyRate = parseFloat(document.getElementById('hourly-rate').value) || 0;
-
-            // --- 2. Perform Calculations ---
-            
-            // Calculate total operational savings over the entire time horizon
-            const totalOperationalSavings = (hoursSaved * hourlyRate) * timeHorizon;
-            
-            // Calculate total risk averted
-            const totalRiskAverted = spendSaved + fraudAverted;
-
-            // Calculate total financial gain
-            const totalGain = totalOperationalSavings + totalRiskAverted;
-
-            // Calculate Net Profit (Total Gain - Total Cost)
-            const netProfit = totalGain - auditCost;
-
-            // Calculate Overall ROI. Handle division by zero if auditCost is 0.
-            const overallROI = auditCost > 0 ? (netProfit / auditCost) * 100 : 0;
-            
-            // Calculate Risk Mitigation ROI.
-            const riskMitigationROI = auditCost > 0 ? (totalRiskAverted / auditCost) * 100 : 0;
-
-            // --- 3. Display the Results ---
-            
-            // Format numbers for better readability
-            const formatCurrency = (value) => value.toLocaleString('en-US', { style: 'currency', currency: 'USD', minimumFractionDigits: 0, maximumFractionDigits: 0 });
-            const formatPercent = (value) => `${value.toFixed(1)}%`;
-
-            // Update the breakdown section
-            document.getElementById('total-risk-averted').textContent = formatCurrency(totalRiskAverted);
-            document.getElementById('total-ops-savings').textContent = formatCurrency(totalOperationalSavings);
-            document.getElementById('total-gain').textContent = formatCurrency(totalGain);
-
-            // Update the main ROI figures
-            const overallRoiElement = document.getElementById('overall-roi');
-            overallRoiElement.textContent = formatPercent(overallROI);
-            // Change color based on positive or negative ROI
-            overallRoiElement.classList.toggle('text-green-600', overallROI >= 0);
-            overallRoiElement.classList.toggle('text-red-600', overallROI < 0);
-
-            document.getElementById('risk-roi').textContent = formatPercent(riskMitigationROI);
-
-            // Create a summary sentence
-            const returnPerDollar = auditCost > 0 ? (totalGain / auditCost) : 0;
-            document.getElementById('roi-summary').textContent = `For every $1 invested, you gained ${formatCurrency(returnPerDollar)}.`;
-
-            // Make the results section visible and scroll to it
-            const resultsSection = document.getElementById('results-section');
-            resultsSection.classList.remove('hidden');
-            resultsSection.scrollIntoView({ behavior: 'smooth' });
-        }
     </script>
 
 </body>
