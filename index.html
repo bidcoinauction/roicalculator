@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Social Audits ROI Calculator</title>
+    <title>Influencer Marketing ROI Calculator</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -78,70 +78,57 @@
     <div class="container mx-auto p-4 sm:p-6 md:p-8 max-w-4xl">
         
         <header class="text-center mb-8">
-            <h1 class="text-3xl md:text-4xl font-bold text-slate-900">Social Audits ROI Calculator</h1>
-            <p class="mt-2 text-slate-600 max-w-2xl mx-auto">See how much of your marketing budget you could save by eliminating bots and inauthentic engagement.</p>
+            <h1 class="text-3xl md:text-4xl font-bold text-slate-900">Influencer Marketing ROI Calculator</h1>
+            <p class="mt-2 text-slate-600 max-w-2xl mx-auto">Stop asking "How much does an audit cost?" and start asking "How much more revenue could I generate?"</p>
         </header>
 
         <main class="bg-white p-6 sm:p-8 rounded-2xl shadow-lg">
             <form id="roi-form" class="space-y-8">
 
-                <!-- Section 1: Campaign & Investment Details -->
                 <fieldset>
-                    <legend class="text-xl font-semibold text-slate-900 border-b border-slate-200 pb-2 mb-4 w-full">1. Your Campaign Details</legend>
+                    <legend class="text-xl font-semibold text-slate-900 border-b border-slate-200 pb-2 mb-4 w-full">1. Your Campaign Assumptions</legend>
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                         <div>
-                            <label for="total-campaign-budget" class="block text-sm font-medium text-slate-700 mb-1">Total Influencer/KOL Budget ($)</label>
-                            <input type="number" id="total-campaign-budget" placeholder="e.g., 50000" class="w-full p-3 border border-slate-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition">
+                            <label for="total-influencer-budget" class="block text-sm font-medium text-slate-700 mb-1">Total Influencer/KOL Budget ($)</label>
+                            <input type="number" id="total-influencer-budget" placeholder="e.g., 20000" class="w-full p-3 border border-slate-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition">
                         </div>
                         <div>
-                            <label for="audit-cost" class="block text-sm font-medium text-slate-700 mb-1">Cost of Social Audit ($)</label>
-                            <input type="number" id="audit-cost" value="399" class="w-full p-3 border border-slate-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition">
+                            <label for="roas" class="flex items-center text-sm font-medium text-slate-700 mb-1">
+                                Expected Return on Ad Spend (ROAS)
+                                <span class="tooltip ml-2">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-question-circle text-slate-400" viewBox="0 0 16 16"><path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/><path d="M5.255 5.786a.237.237 0 0 0 .241.247h.825c.138 0 .248-.113.266-.25.09-.656.54-1.134 1.342-1.134.686 0 1.314.343 1.314 1.168 0 .635-.374.927-.965 1.371-.673.489-1.206 1.06-1.168 1.987l.003.217a.25.25 0 0 0 .25.246h.811a.25.25 0 0 0 .25-.25v-.105c0-.718.273-.927 1.01-1.486.609-.463 1.244-.977 1.244-2.056 0-1.511-1.276-2.241-2.673-2.241-1.267 0-2.655.59-2.75 2.286zm1.557 5.763c0 .533.425.927 1.01.927.609 0 1.028-.394 1.028-.927 0-.552-.42-.94-1.029-.94-.584 0-1.009.388-1.009.94z"/></svg>
+                                    <span class="tooltiptext">Your ROAS is a multiplier. If you expect a 4x ROAS, it means you generate $4 in revenue for every $1 spent on ads.</span>
+                                </span>
+                            </label>
+                            <input type="number" id="roas" placeholder="e.g., 4" class="w-full p-3 border border-slate-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition">
                         </div>
                     </div>
                      <div class="mt-6">
-                        <label for="bot-percentage" class="flex items-center text-sm font-medium text-slate-700 mb-2">
-                            Industry Average Bot & Inauthentic Engagement (%)
+                        <label for="inauthentic-rate" class="flex items-center text-sm font-medium text-slate-700 mb-2">
+                            Inauthentic Engagement Rate (%)
                             <span class="tooltip ml-2">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-question-circle text-slate-400" viewBox="0 0 16 16"><path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/><path d="M5.255 5.786a.237.237 0 0 0 .241.247h.825c.138 0 .248-.113.266-.25.09-.656.54-1.134 1.342-1.134.686 0 1.314.343 1.314 1.168 0 .635-.374.927-.965 1.371-.673.489-1.206 1.06-1.168 1.987l.003.217a.25.25 0 0 0 .25.246h.811a.25.25 0 0 0 .25-.25v-.105c0-.718.273-.927 1.01-1.486.609-.463 1.244-.977 1.244-2.056 0-1.511-1.276-2.241-2.673-2.241-1.267 0-2.655.59-2.75 2.286zm1.557 5.763c0 .533.425.927 1.01.927.609 0 1.028-.394 1.028-.927 0-.552-.42-.94-1.029-.94-.584 0-1.009.388-1.009.94z"/></svg>
-                                <span class="tooltiptext">Based on our internal analysis of over 500 KOLs, we've found that, on average, 65% of engagement can be attributed to bots or manipulation. Adjust this based on your industry knowledge.</span>
+                                <span class="tooltiptext">Our research indicates an industry average of 73% of engagement is from bots or inauthentic sources. Adjust this slider to explore different scenarios.</span>
                             </span>
                         </label>
                         <div class="flex items-center gap-4">
-                            <input type="range" id="bot-percentage" min="0" max="100" value="65" class="w-full">
-                            <span id="bot-percentage-value" class="font-semibold text-indigo-600 text-lg w-16 text-center">65%</span>
+                            <input type="range" id="inauthentic-rate" min="0" max="100" value="73" class="w-full">
+                            <span id="inauthentic-rate-value" class="font-semibold text-indigo-600 text-lg w-16 text-center">73%</span>
                         </div>
                     </div>
                 </fieldset>
 
-                <!-- Section 2: Operational Efficiency -->
-                <fieldset>
-                    <legend class="text-xl font-semibold text-slate-900 border-b border-slate-200 pb-2 mb-4 w-full">2. Operational Efficiency Gains</legend>
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                         <div>
-                            <label for="hours-saved" class="block text-sm font-medium text-slate-700 mb-1">Team Hours Saved per Month</label>
-                            <input type="number" id="hours-saved" placeholder="e.g., 20" class="w-full p-3 border border-slate-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition">
-                        </div>
-                        <div>
-                            <label for="hourly-rate" class="block text-sm font-medium text-slate-700 mb-1">Average Employee Hourly Rate ($)</label>
-                            <input type="number" id="hourly-rate" placeholder="e.g., 50" class="w-full p-3 border border-slate-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition">
-                        </div>
-                         <input type="hidden" id="time-horizon" value="12">
-                    </div>
-                </fieldset>
-
-                <!-- Action Button -->
                 <div class="pt-4 text-center">
                     <button type="submit" class="bg-indigo-600 text-white font-bold py-3 px-10 rounded-lg hover:bg-indigo-700 focus:outline-none focus:ring-4 focus:ring-indigo-500 focus:ring-opacity-50 transition-transform transform hover:scale-105">
-                        Calculate My Potential ROI
+                        Calculate My Potential Revenue
                     </button>
                 </div>
             </form>
         </main>
         
-        <!-- Results Section -->
         <section id="results-section" class="mt-8 hidden">
             <div class="bg-white p-6 sm:p-8 rounded-2xl shadow-lg border-t-4 border-indigo-500">
-                <h2 class="text-2xl font-bold text-slate-900 text-center mb-6">Your Estimated ROI Results</h2>
+                <h2 class="text-2xl font-bold text-slate-900 text-center mb-6">Your Potential ROI Story</h2>
                 
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <div class="flex flex-col justify-center items-center bg-slate-50 p-6 rounded-lg">
@@ -151,33 +138,32 @@
                         </div>
                     </div>
                     <div class="bg-slate-50 p-6 rounded-lg text-center flex flex-col justify-center">
-                        <h3 class="text-sm font-semibold text-slate-600 uppercase tracking-wider">Potential ROI</h3>
-                        <p id="overall-roi" class="text-4xl md:text-5xl font-bold mt-2"></p>
+                        <h3 class="text-sm font-semibold text-slate-600 uppercase tracking-wider">Potential Return on Audit Investment</h3>
+                        <p id="overall-roi" class="text-4xl md:text-5xl font-bold mt-2 text-green-600"></p>
                         <p id="roi-summary" class="text-slate-500 mt-2"></p>
                     </div>
                 </div>
 
                 <div class="mt-6 border-t border-slate-200 pt-6">
-                    <h3 class="text-lg font-semibold text-slate-800 mb-3">Breakdown of Gains:</h3>
-                    <ul class="space-y-2 text-slate-700">
-                        <li class="flex justify-between items-center p-3 bg-slate-50 rounded-md">
-                            <span>Potential Wasted Spend Recovered:</span>
-                            <span id="total-risk-averted" class="font-semibold"></span>
+                    <h3 class="text-lg font-semibold text-slate-800 mb-3">Breakdown of Your Opportunity:</h3>
+                    <ul class="space-y-3 text-slate-700">
+                        <li class="flex justify-between items-center p-4 bg-slate-50 rounded-lg">
+                            <span>Budget Recovered for Re-investment:</span>
+                            <span id="budget-recovered" class="font-semibold text-lg"></span>
                         </li>
-                        <li class="flex justify-between items-center p-3 bg-slate-50 rounded-md">
-                            <span>Total Operational Savings (12 mo):</span>
-                            <span id="total-ops-savings" class="font-semibold"></span>
+                        <li class="flex justify-between items-center p-4 bg-slate-50 rounded-lg">
+                            <span>Potential Additional Return from Re-investment:</span>
+                            <span id="additional-return" class="font-semibold text-lg text-green-600"></span>
                         </li>
-                        <li class="flex justify-between items-center p-3 bg-indigo-100 text-indigo-800 rounded-md">
-                            <span class="font-bold">Total Estimated Gain:</span>
-                            <span id="total-gain" class="font-bold"></span>
+                        <li class="flex justify-between items-center p-4 bg-indigo-100 text-indigo-900 rounded-lg mt-4">
+                            <span class="font-bold text-lg">Total Potential Financial Gain:</span>
+                            <span id="total-gain" class="font-bold text-xl"></span>
                         </li>
                     </ul>
                 </div>
             </div>
         </section>
 
-        <!-- Lead Capture Section -->
         <section id="lead-capture-section" class="mt-8 hidden">
             <div class="bg-indigo-700 text-white p-8 rounded-2xl shadow-lg text-center">
                 <h2 class="text-2xl font-bold mb-2">Ready to Secure Your Budget?</h2>
@@ -197,14 +183,14 @@
     <script>
         document.addEventListener('DOMContentLoaded', () => {
             const form = document.getElementById('roi-form');
-            const botPercentageSlider = document.getElementById('bot-percentage');
-            const botPercentageValue = document.getElementById('bot-percentage-value');
+            const inauthenticRateSlider = document.getElementById('inauthentic-rate');
+            const inauthenticRateValue = document.getElementById('inauthentic-rate-value');
             const leadForm = document.getElementById('lead-form');
             let roiChart = null; // To hold the chart instance
 
             // Update slider value display
-            botPercentageSlider.addEventListener('input', (e) => {
-                botPercentageValue.textContent = `${e.target.value}%`;
+            inauthenticRateSlider.addEventListener('input', (e) => {
+                inauthenticRateValue.textContent = `${e.target.value}%`;
             });
 
             // Handle main ROI form submission
@@ -222,27 +208,25 @@
 
             function calculateAndDisplayROI() {
                 // --- 1. Get values from input fields ---
-                const totalCampaignBudget = parseFloat(document.getElementById('total-campaign-budget').value) || 0;
-                const auditCost = parseFloat(document.getElementById('audit-cost').value) || 0;
-                const botPercentage = parseFloat(document.getElementById('bot-percentage').value) || 0;
-                const hoursSaved = parseFloat(document.getElementById('hours-saved').value) || 0;
-                const hourlyRate = parseFloat(document.getElementById('hourly-rate').value) || 0;
-                const timeHorizon = parseFloat(document.getElementById('time-horizon').value) || 12;
+                const totalBudget = parseFloat(document.getElementById('total-influencer-budget').value) || 0;
+                const roas = parseFloat(document.getElementById('roas').value) || 0;
+                const inauthenticRate = parseFloat(document.getElementById('inauthentic-rate').value) || 0;
+                const auditCost = 399; // Fixed cost of the audit service
 
-                // --- 2. Perform Calculations ---
-                const potentialWastedSpend = totalCampaignBudget * (botPercentage / 100);
-                const totalOperationalSavings = (hoursSaved * hourlyRate) * timeHorizon;
-                const totalGain = potentialWastedSpend + totalOperationalSavings;
+                // --- 2. Perform Calculations based on the new logic ---
+                const budgetRecovered = totalBudget * (inauthenticRate / 100);
+                const additionalReturn = budgetRecovered * roas;
+                const totalGain = additionalReturn; // The main "gain" is the opportunity cost captured
                 const netProfit = totalGain - auditCost;
                 const overallROI = auditCost > 0 ? (netProfit / auditCost) * 100 : 0;
-                const effectiveSpend = totalCampaignBudget - potentialWastedSpend;
+                const effectiveSpend = totalBudget - budgetRecovered;
 
                 // --- 3. Display the Results ---
                 const formatCurrency = (value) => value.toLocaleString('en-US', { style: 'currency', currency: 'USD', minimumFractionDigits: 0, maximumFractionDigits: 0 });
-                const formatPercent = (value) => `${value.toFixed(1)}%`;
+                const formatPercent = (value) => `${value.toLocaleString('en-US', {minimumFractionDigits: 0, maximumFractionDigits: 0})}%`;
 
-                document.getElementById('total-risk-averted').textContent = formatCurrency(potentialWastedSpend);
-                document.getElementById('total-ops-savings').textContent = formatCurrency(totalOperationalSavings);
+                document.getElementById('budget-recovered').textContent = formatCurrency(budgetRecovered);
+                document.getElementById('additional-return').textContent = formatCurrency(additionalReturn);
                 document.getElementById('total-gain').textContent = formatCurrency(totalGain);
 
                 const overallRoiElement = document.getElementById('overall-roi');
@@ -251,17 +235,17 @@
                 overallRoiElement.classList.toggle('text-red-600', overallROI < 0);
 
                 const returnPerDollar = auditCost > 0 ? (totalGain / auditCost) : 0;
-                document.getElementById('roi-summary').textContent = `For every $1 invested, you could gain ${formatCurrency(returnPerDollar)}.`;
+                document.getElementById('roi-summary').textContent = `That's a potential return of ${formatCurrency(returnPerDollar)} for every $1 invested in an audit.`;
 
                 // --- 4. Create or Update Chart ---
                 const ctx = document.getElementById('roiChart').getContext('2d');
                 const chartData = {
-                    labels: ['Budget at Risk', 'Effective Spend'],
+                    labels: [`Wasted Spend (${inauthenticRate}%)`, `Effective Spend (${100-inauthenticRate}%)`],
                     datasets: [{
-                        data: [potentialWastedSpend, effectiveSpend],
+                        data: [budgetRecovered, effectiveSpend],
                         backgroundColor: ['#fca5a5', '#818cf8'],
-                        borderColor: ['#ef4444', '#4f46e5'],
-                        borderWidth: 1
+                        borderColor: ['#fff', '#fff'],
+                        borderWidth: 2
                     }]
                 };
 
@@ -274,6 +258,7 @@
                         data: chartData,
                         options: {
                             responsive: true,
+                            cutout: '60%',
                             plugins: {
                                 legend: {
                                     position: 'bottom',
